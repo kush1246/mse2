@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
+import api from '../api/axios';
 import GrievanceForm from './GrievanceForm';
 import GrievanceList from './GrievanceList';
 import SearchBar from './SearchBar';
@@ -19,7 +19,7 @@ const Dashboard = () => {
 
   const fetchGrievances = async () => {
     try {
-      const response = await axios.get('/api/grievances');
+      const response = await api.get('/grievances');
       setGrievances(response.data);
       setFilteredGrievances(response.data);
     } catch (error) {
@@ -54,7 +54,7 @@ const Dashboard = () => {
   const handleDeleteGrievance = async (id) => {
     if (window.confirm('Are you sure you want to delete this grievance?')) {
       try {
-        await axios.delete(`/api/grievances/${id}`);
+        await api.delete(`/grievances/${id}`);
         fetchGrievances();
       } catch (error) {
         console.error('Error deleting grievance:', error);
@@ -66,9 +66,9 @@ const Dashboard = () => {
   const handleFormSubmit = async (formData) => {
     try {
       if (editingGrievance) {
-        await axios.put(`/api/grievances/${editingGrievance._id}`, formData);
+        await api.put(`/grievances/${editingGrievance._id}`, formData);
       } else {
-        await axios.post('/api/grievances', formData);
+        await api.post('/grievances', formData);
       }
       setShowForm(false);
       setEditingGrievance(null);
