@@ -26,7 +26,7 @@ const Login = () => {
     setError('');
 
     try {
-      const response = await api.post('/login', formData);
+      const response = await api.post('/api/login', formData);
       
       if (response.data.token && response.data.student) {
         login(response.data.token, response.data.student);

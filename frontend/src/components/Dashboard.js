@@ -19,7 +19,7 @@ const Dashboard = () => {
 
   const fetchGrievances = async () => {
     try {
-      const response = await api.get('/grievances');
+      const response = await api.get('/api/grievances');
       setGrievances(response.data);
       setFilteredGrievances(response.data);
     } catch (error) {
@@ -54,7 +54,7 @@ const Dashboard = () => {
   const handleDeleteGrievance = async (id) => {
     if (window.confirm('Are you sure you want to delete this grievance?')) {
       try {
-        await api.delete(`/grievances/${id}`);
+        await api.delete(`/api/grievances/${id}`);
         fetchGrievances();
       } catch (error) {
         console.error('Error deleting grievance:', error);
@@ -66,9 +66,9 @@ const Dashboard = () => {
   const handleFormSubmit = async (formData) => {
     try {
       if (editingGrievance) {
-        await api.put(`/grievances/${editingGrievance._id}`, formData);
+        await api.put(`/api/grievances/${editingGrievance._id}`, formData);
       } else {
-        await api.post('/grievances', formData);
+        await api.post('/api/grievances', formData);
       }
       setShowForm(false);
       setEditingGrievance(null);
